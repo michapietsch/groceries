@@ -16,8 +16,8 @@ class CreateGroceryStorageTable extends Migration
         Schema::create('grocery_storage', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('grocery_id');
-            $table->unsignedInteger('storage_id');
+            $table->unsignedBigInteger('grocery_id');
+            $table->unsignedBigInteger('storage_id');
 
             $table->unsignedInteger('quantity_in_stock')->default(0);
             $table->unsignedInteger('quantity_required')->default(0);

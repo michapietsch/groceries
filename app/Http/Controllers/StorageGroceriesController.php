@@ -8,6 +8,14 @@ use App\Grocery;
 
 class StorageGroceriesController extends Controller
 {
+    public function store(Request $request, Storage $storage)
+    {
+        $storage->groceries()->attach([$request->get('grocery_id')]);
+        $storage->save();
+
+        return redirect(route('storage.show', ['storage' => $storage]));
+    }
+
     public function update(Request $request, Storage $storage, Grocery $grocery)
     {
         $storage->groceries()->updateExistingPivot($grocery->id, [

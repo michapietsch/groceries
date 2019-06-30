@@ -16,8 +16,8 @@ class CreateGroceryRecipeTable extends Migration
         Schema::create('grocery_recipe', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('grocery_id');
-            $table->unsignedInteger('recipe_id');
+            $table->unsignedBigInteger('grocery_id');
+            $table->unsignedBigInteger('recipe_id');
 
             $table->timestamps();
 

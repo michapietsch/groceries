@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Grocery;
 use App\Storage;
+use App\Recipe;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,10 +19,8 @@ class DatabaseSeeder extends Seeder
             'Coffee beans',
             'Butter'
         ];
-        foreach ($groceries as $grocery) {
-            factory(Grocery::class)->create([
-                'name' => $grocery
-            ]);
+        foreach ($groceries as $name) {
+            factory(Grocery::class)->create(compact('name'));
         }
 
         $storages = [
@@ -34,6 +33,21 @@ class DatabaseSeeder extends Seeder
             ])
             ->groceries()
             ->sync(Grocery::all());
+        }
+
+        $moreGroceries = [
+            'Bread',
+            'Potatoes',
+        ];
+        foreach ($moreGroceries as $name) {
+            factory(Grocery::class)->create(compact('name'));
+        }
+
+        $recipes = [
+            'Pizza',
+        ];
+        foreach ($recipes as $name) {
+            factory(Recipe::class)->create(compact('name'));
         }
     }
 }

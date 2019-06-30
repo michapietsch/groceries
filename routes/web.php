@@ -21,7 +21,14 @@ Route::post('/groceries', 'GroceryController@store');
 
 Route::get('/storages', 'StorageController@index');
 Route::get('/storages/{storage}', 'StorageController@show')->name('storage.show');
+Route::post('/storages/{storage}/groceries', 'StorageGroceriesController@store');
 Route::patch('/storages/{storage}/groceries/{grocery}', 'StorageGroceriesController@update');
+
+Route::get('/recipes', 'RecipeController@index');
+Route::get('/recipes/create', 'RecipeController@create');
+Route::post('/recipes', 'RecipeController@store');
+Route::get('/recipes/{recipe}', 'RecipeController@show')->name('recipe.show');
+Route::post('/recipes/{recipe}/groceries', 'RecipeGroceriesController@store');
 
 Auth::routes();
 

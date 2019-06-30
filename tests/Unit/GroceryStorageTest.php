@@ -38,4 +38,20 @@ class GroceryStorageTest extends TestCase
 
         $this->assertDatabaseMissing('grocery_storage', [ 'grocery_id' => $grocery->id ]);
     }
+
+    /** @test */
+    public function can_determine_groceries_not_in_a_given_storage()
+    {
+        $storage = factory(Storage::class)->create();
+        $groceryInStorage = factory(Grocery::class)->create();
+        $storage->groceries()->sync($groceryInStorage);
+
+        $groceryNotInStorage = factory(Grocery::class)->create();
+
+        $this->assertTrue(
+            Grocery::whereIn('id', [$groceryInStorage->id, $groceryNotInStorage->id])
+                ->notIn($storage)
+                ->first()->is($groceryNotInStorage)
+        );
+    }
 }

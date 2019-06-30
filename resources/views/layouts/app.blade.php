@@ -44,6 +44,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/storages">Storages</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/recipes">Recipes</a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
