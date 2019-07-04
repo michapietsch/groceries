@@ -6,6 +6,8 @@ use Tests\TestCase;
 use App\Grocery;
 use App\Recipe;
 use App\Storage;
+use App\GroceryStorage;
+use App\GroceriesInStorage;
 
 class GroceryStorageTest extends TestCase
 {
@@ -52,6 +54,29 @@ class GroceryStorageTest extends TestCase
             Grocery::whereIn('id', [$groceryInStorage->id, $groceryNotInStorage->id])
                 ->notIn($storage)
                 ->first()->is($groceryNotInStorage)
+        );
+    }
+
+    /** @test */
+    public function can_determine_groceries_by_storage_that_need_to_be_refilled()
+    {
+        $storage = factory(Storage::class)->create();
+
+        $storage->groceries()->attach(
+            $groceryNeedsRefill = factory(Grocery::class)->create(),
+            ['quantity_in_stock' => 2, 'quantity_required' => 5]
+        );
+
+        $storage->groceries()->attach(
+            $groceryMoreThanEnough = factory(Grocery::class)->create(),
+            ['quantity_in_stock' => 10, 'quantity_required' => 2]
+        );
+
+        $this->assertEquals(
+            [$storage->id, $groceryNeedsRefill->id],
+            GroceriesInStorage::needRefill()->map(function ($item) {
+                return [$item->storage_id, $item->grocery_id];
+            })->flatten()->toArray()
         );
     }
 }
